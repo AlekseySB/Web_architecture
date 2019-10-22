@@ -1,0 +1,39 @@
+﻿В Yii_2 часть 2 нашел только 2 конкретных, серьезных антипаттерна!
+-------
+---1---
+// PHP YII_2 migrations
+$sql_1 = "ALTER TABLE project_user ADD role ENUM('manager', 'developer', 'tester')";
+$sql_2 = "ALTER TABLE project_user ALTER role SET DEFAULT 'developer'";
+
+$this->execute($sql_1);
+$this->execute($sql_2);
+////
+
+АнтиПаттерн:
+"Ненужная сложность"
+
+Решение:
+'role' => "enum ('manager', 'developer', 'tester')";
+
+Описание:
+В данном случае я не знал, что можно написать команду простым SQL-кодом и решил выполнить конкретные SQL-запросы, чтобы быть уверенным, что все сработает правильно!
+************************************************************************************
+
+
+---2---
+// PHP YII_2
+$projectStr = Project::find()->getAllProjects()[$model->project_id];
+
+$userStr = User::find()->select('username')->indexBy('id')->column()[$model->executor_id];
+////
+
+АнтиПаттерн:
+"Ненужная сложность"
+
+Решение:
+В обоих случаях нужно было использовать релейшены:
+$model->getProject()->title;
+$model->getExecutor()->username;
+
+Описание:
+На тот момент (да и сейчас тоже) я не настолько хорошо разобрался в самом фреймворке, чтобы понять как сделать проще!
