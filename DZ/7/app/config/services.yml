@@ -1,4 +1,0 @@
-services:
-    Command\CreateUserCommand:
-        public: false
-        tags: [console.command]
